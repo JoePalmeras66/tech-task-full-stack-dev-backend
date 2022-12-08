@@ -1,0 +1,31 @@
+config:
+  endpoint:
+    url: "https://randomuser.me"
+  fixed:
+    rate: 30000  # in milli seconds
+  max:
+    users: 10
+  jobs:
+    enabled: true
+
+# Database
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: postgres
+    password: changeme
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create
+    show-sql: false
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            scripts:
+              action: create
+              create-target: create.sql
+              create-source: metadata
