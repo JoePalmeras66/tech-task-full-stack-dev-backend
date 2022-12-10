@@ -1,35 +1,50 @@
+### Initial Database SetUp
 
+First time you run 
+```
+docker-compose up
+```
 
+only the database ***db*** was created. Next step is to create the necessary tables. For creating the Tables we use ***pdAdmin*** by running the SQL-Queries from file ***create.sql***.
 
->***Initial SetUp***
->
+#### Create file ***create.sql***
 
-1. **Run docker-compose.yaml**
-   start postgres-db and pgAdmin instance in docker
+To generate ***create.sql*** run:
 
-2. **Prepare Sql-Script "create.sql"**
+```
+gradlew clean build
+```
 
-   gradlew build
+IMPORTANT: To execute with ***pgAdmin*** the SQL-Queries from ***create.sql*** you have to append to every SQL-Query an ***semicolon***.
 
-   Produces "create.sql" file. Append semicolon ';' at every line end in "create.sql"-file.
-3. **pgAdmin create connection to docker postgres-db**
+#### Setup pgAdmin
 
-   To create a connection to postgres-db in docker-container with pgAdmin you need the ip-address of the postgres docker container instance.
+To access ***pgAdmin*** invoke: [http://localhost:5050/browser/](http://localhost:5050/browser/)
 
-   First to grap the containerId run:
+##### pgAdmin Database Connection
 
-   docker ps
+To setup a connection with pgAdmin to the postgresDB you need the ip-address from the running postgres docker instance.
 
-To get the **ip-address** of postgres docker container run:
+1. Grap container-ID from postgres docker instance:
+```
+docker ps
 
+CONTAINER ID   IMAGE            COMMAND                  CREATED        STATUS         PORTS                           NAMES
+79ab86583b10   dpage/pgadmin4   "/entrypoint.sh"         20 hours ago   Up 5 seconds   443/tcp, 0.0.0.0:5050->80/tcp   pgadmin_container
+8073210961f2   postgres         "docker-entrypoint.s…"   20 hours ago   Up 7 seconds   0.0.0.0:5432->5432/tcp          postgres_container
+```
 
-docker inspect "containerId"
+##### To get the **ip-address** of postgres docker container instance,  run:
+
+```
+docker inspect 8073210961f2
+```
+
+![ip-address](doc/docker-instance-postgres-ip-address.png)
 
  Use **ip-address** from the console output for pgAdmin Connection
 
-4. **Run Sql-Scripts from "create.sql" in pgAdmin**
+![general](doc/pgadmin-db-connection-general-properties.png)
 
-In pgAdmin you can execute the previousely generated and prepared "create.sql"-script. Please first run "create table" commands without foreign keys. After that run the remaining "create table" commands and lastly the "alter table" commands
+![connection](doc/pgadmin-db-connection-string-properties.png)
 
-
-> Written with [StackEdit](https://stackedit.io/).
