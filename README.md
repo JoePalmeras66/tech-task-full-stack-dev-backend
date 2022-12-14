@@ -13,21 +13,21 @@ For building and running the application you need:
 
 ## Getting Started
 
-Before you can start the Application build docker image 'joepalmeras66/tech-task-dev-backend:latest'
+### Build docker image
 
 ```
 gradlew bootBuildImage
 ```
 
-For start the Application run
+### Run Application
 
 ```
 docker-compose up
 ```
 
-IMPORTANT: First time you running postgresDB docker-compose you have to setup the tables. See therefore Instroctions under [README_INITIAL_SETUP.md](README_INITIAL_SETUP.md)
+IMPORTANT: First time you running postgresDB docker-compose you have to setup the tables. See therefore Instructions under [README_INITIAL_SETUP.md](README_INITIAL_SETUP.md)
 
-Check docker images:
+### Check docker images
 
 ```
 docker images
@@ -40,7 +40,7 @@ joepalmeras66/tech-task-dev-backend   latest     1c33e46eb64d   42 years ago   3
 paketobuildpacks/builder              base       c3549f435e8e   42 years ago   1.34GB
 ```
 
-Verify container running
+### Verify container running
 ```
 docker ps
 
@@ -50,7 +50,7 @@ b569e4aa4400   joepalmeras66/tech-task-dev-backend:latest   "/cnb/process/web"  
 45c1771b81f8   postgres                                     "docker-entrypoint.s…"   33 seconds ago   Up 31 seconds   0.0.0.0:5432->5432/tcp          postgres_container
 ```
 
-## Shut down docker container's
+### Shut down docker container's
 
 ```
 docker-compose down
