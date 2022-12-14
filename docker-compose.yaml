@@ -1,26 +1,26 @@
 version: '3.7'
 
 services:
-#  tech-task-dev-backend:
-#    image: joepalmeras66/tech-task-dev-backend:0.0.2-SNAPSHOT
-#    ports:
-#      - '8080:8080'
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=default
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/db
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=changeme
-#    networks:
-#      - postgres
-#    depends_on:
-#      - postgres
+  tech-task-dev-backend:
+    image: joepalmeras66/tech-task-dev-backend:${TECH_TASK_VERSION:-latest}
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_CONTAINER_NAME:-postgres_container}:5432/db
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER:-postgres}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+    networks:
+      - db_net
+    depends_on:
+      - postgres
 
   postgres:
-    container_name: postgres_container
+    container_name: ${DB_CONTAINER_NAME:-postgres_container}
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       POSTGRES_DB: db
       PGDATA: /data/postgres
     volumes:
@@ -28,7 +28,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - db_net
     restart: unless-stopped
   
   pgadmin:
@@ -43,13 +43,13 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
-      - postgres
+      - db_net
     depends_on:
       - postgres
     restart: unless-stopped
 
 networks:
-  postgres:
+  db_net:
     driver: bridge
 
 volumes:

@@ -1,6 +1,6 @@
 # Tech Task D3 Cloud: Backend
 
-Spring-Boot Application for crawling periodically JSON data from https://randomuser.me/api and store the fetched data in PostgresDB. 
+Spring-Boot Application for crawling periodically JSON data from https://randomuser.me/api and store the fetched data in PostgresDB.
 
 ## Requirements
 
@@ -13,7 +13,13 @@ For building and running the application you need:
 
 ## Getting Started
 
-For start Postgres Database run 
+Before you can start the Application build docker image 'joepalmeras66/tech-task-dev-backend:latest'
+
+```
+gradlew bootBuildImage
+```
+
+For start the Application run
 
 ```
 docker-compose up
@@ -26,27 +32,25 @@ Check docker images:
 ```
 docker images
 
-REPOSITORY       TAG       IMAGE ID       CREATED      SIZE
-postgres         latest    4c6b3cc10e6b   2 days ago   379MB
-dpage/pgadmin4   latest    7ac3e08c2412   9 days ago   358MB
+REPOSITORY                            TAG        IMAGE ID       CREATED        SIZE
+paketobuildpacks/run                  base-cnb   e06d1d37657c   19 hours ago   87MB
+postgres                              latest     4c6b3cc10e6b   8 days ago     379MB
+dpage/pgadmin4                        latest     7ac3e08c2412   2 weeks ago    358MB
+joepalmeras66/tech-task-dev-backend   latest     1c33e46eb64d   42 years ago   307MB
+paketobuildpacks/builder              base       c3549f435e8e   42 years ago   1.34GB
 ```
 
 Verify container running
 ```
 docker ps
 
-CONTAINER ID   IMAGE            COMMAND                  CREATED        STATUS         PORTS                           NAMES
-79ab86583b10   dpage/pgadmin4   "/entrypoint.sh"         20 hours ago   Up 5 seconds   443/tcp, 0.0.0.0:5050->80/tcp   pgadmin_container
-8073210961f2   postgres         "docker-entrypoint.s…"   20 hours ago   Up 7 seconds   0.0.0.0:5432->5432/tcp          postgres_container
+CONTAINER ID   IMAGE                                        COMMAND                  CREATED          STATUS          PORTS                           NAMES
+b569e4aa4400   joepalmeras66/tech-task-dev-backend:latest   "/cnb/process/web"       33 seconds ago   Up 29 seconds   0.0.0.0:8080->8080/tcp          tech-task-full-stack-dev-backend-tech-task-dev-backend-1
+1134aec271ec   dpage/pgadmin4                               "/entrypoint.sh"         33 seconds ago   Up 29 seconds   443/tcp, 0.0.0.0:5050->80/tcp   pgadmin_container
+45c1771b81f8   postgres                                     "docker-entrypoint.s…"   33 seconds ago   Up 31 seconds   0.0.0.0:5432->5432/tcp          postgres_container
 ```
 
-## Build & Run Spring-Boot Application
-
-```
-gradlew clean build bootRun
-```
-
-## Stop docker container
+## Shut down docker container's
 
 ```
 docker-compose down
