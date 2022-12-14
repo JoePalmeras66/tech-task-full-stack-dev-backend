@@ -22,7 +22,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 group="org.demicon.tech.task.d3.cloud"
-version="0.0.2-SNAPSHOT"
+version="latest"
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"

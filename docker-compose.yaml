@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   tech-task-dev-backend:
-    image: joepalmeras66/tech-task-dev-backend:0.0.2-SNAPSHOT
+    image: joepalmeras66/tech-task-dev-backend:${TECH_TASK_VERSION:-latest}
     ports:
       - '8080:8080'
     environment:
