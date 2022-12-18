@@ -3,8 +3,6 @@ config:
     url: "https://randomuser.me"
   fixed:
     rate: 30000  # in milli seconds
-  max:
-    users: 10
   jobs:
     enabled: true
 
