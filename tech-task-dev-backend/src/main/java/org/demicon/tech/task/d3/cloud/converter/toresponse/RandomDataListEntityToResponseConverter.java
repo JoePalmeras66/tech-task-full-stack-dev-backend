@@ -14,6 +14,6 @@ public class RandomDataListEntityToResponseConverter implements Converter<Stream
     private final RandomDataEntityToResponseConverter randomDataEntityToResponseConverter;
     @Override
     public Stream<RandomUserResponse> convert(Stream<RandomUser> source) {
-        return source.map(item -> randomDataEntityToResponseConverter.convert(item));
+        return source.map(item -> this.randomDataEntityToResponseConverter.convert(item));
     }
 }
