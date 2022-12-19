@@ -4,7 +4,7 @@ config:
   fixed:
     rate: 30000  # in milli seconds
   jobs:
-    enabled: true
+    enabled: false
 
 # Database
 spring:
