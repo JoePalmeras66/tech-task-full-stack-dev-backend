@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataStreamEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataPageEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.domain.model.response.RandomUserResponse;
+import org.demicon.tech.task.d3.cloud.domain.model.response.page.RandomUserResponsePageInfo;
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserServiceImpl;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class RandomUserController {
     private final RandomDataPageEntityToResponseConverter randomDataPageEntityToResponseConverter;
 
     @GetMapping("/all")
-    public CompletableFuture<Page<RandomUserResponse>> findAllByLocationCountry(@RequestParam("country") String country,
-                                                                                @PageableDefault(sort = "createdOn") Pageable pageable) {
+    public CompletableFuture<RandomUserResponsePageInfo> findAllByLocationCountry(@RequestParam("country") String country,
+                                                                                  @PageableDefault(sort = "createdOn") Pageable pageable) {
         return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
                 this.randomUserService.findAllByLocationCountry(country, pageable))
         );
