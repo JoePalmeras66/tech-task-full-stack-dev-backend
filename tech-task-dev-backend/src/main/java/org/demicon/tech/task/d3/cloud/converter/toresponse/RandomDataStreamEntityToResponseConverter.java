@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
-public class RandomDataListEntityToResponseConverter implements Converter<Stream<RandomUser>, Stream<RandomUserResponse>> {
+public class RandomDataStreamEntityToResponseConverter implements Converter<Stream<RandomUser>, Stream<RandomUserResponse>> {
     private final RandomDataEntityToResponseConverter randomDataEntityToResponseConverter;
     @Override
     public Stream<RandomUserResponse> convert(Stream<RandomUser> source) {
