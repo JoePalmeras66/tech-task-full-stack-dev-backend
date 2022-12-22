@@ -12,6 +12,9 @@ public class RandomDataEntityToResponseConverter implements Converter<RandomUser
         return new RandomUserResponse(source.getName().getFirst(),
                                       source.getName().getLast(),
                                       source.getGender(),
-                                      source.getEmail());
+                                      source.getEmail(),
+                                      source.getLocation().getCountry(),
+                                      source.getLocation().getCity(),
+                                      source.getLocation().getState());
     }
 }
