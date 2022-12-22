@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class GenderServiceImpl implements GenderService {
     private final GenderRepository genderRepository;
     @Override
-    public Stream<String> findAllDistinct() {
+    public Stream<String> findAllGenderDistinct() {
         return this.genderRepository.findAll().stream().map(RandomUser::getGender).distinct();
     }
 }
