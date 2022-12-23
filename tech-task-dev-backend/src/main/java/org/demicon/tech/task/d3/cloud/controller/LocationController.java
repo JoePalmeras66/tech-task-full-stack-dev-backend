@@ -2,8 +2,6 @@ package org.demicon.tech.task.d3.cloud.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.LocationListEntityToResponseConverter;
-import org.demicon.tech.task.d3.cloud.entity.Location;
-import org.demicon.tech.task.d3.cloud.entity.Street;
 import org.demicon.tech.task.d3.cloud.service.impl.LocationServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +18,31 @@ public class LocationController {
     private final LocationServiceImpl locationService;
     private final LocationListEntityToResponseConverter locationListEntityToResponseConverter;
 
-    @GetMapping("/locations")
-    public CompletableFuture<Stream<String>> findAll() {
-        return CompletableFuture.completedFuture(this.locationListEntityToResponseConverter.convert(
-                this.locationService.findAllDistinct()
-        ).map(item -> item.country()));
+    @GetMapping("/location/countries")
+    public CompletableFuture<Stream<String>> findAllCountries() {
+        return CompletableFuture.completedFuture(
+                this.locationService.findAllCountries()
+        );
     }
 
     @GetMapping("/location/streets")
-    public CompletableFuture<Stream<String>> findAllStreetByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllStreetsByCountry(@RequestParam("country") String country) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllStreetsByCountry(country).map(Street::getName)
+                this.locationService.findAllStreetNamesByCountry(country)
         );
     }
 
     @GetMapping("/location/states")
-    public CompletableFuture<Stream<String>> findAllStateByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllStatesByCountry(@RequestParam("country") String country) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllStateByCountry(country)
+                this.locationService.findAllStatesByCountry(country)
+        );
+    }
+
+    @GetMapping("/location/cities")
+    public CompletableFuture<Stream<String>> findAllCitiesByCountry(@RequestParam("country") String country) {
+        return CompletableFuture.completedFuture(
+                this.locationService.findAllCitiesByCountry(country)
         );
     }
 }

@@ -9,13 +9,7 @@ import org.demicon.tech.task.d3.cloud.service.LocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.TreeSet;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toCollection;
 
 @Service
 @RequiredArgsConstructor
@@ -24,22 +18,29 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public Stream<Location> findAllDistinct() {
+    public Stream<String> findAllCountries() {
         return this.locationRepository.findAll().stream()
-                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(Location::getCountry))),
-                        ArrayList::new)).stream();
+                .map(Location::getCountry).distinct();
     }
 
     @Override
     @Transactional
-    public Stream<Street> findAllStreetsByCountry(@NonNull String country) {
+    public Stream<String> findAllStreetNamesByCountry(@NonNull String country) {
         return this.locationRepository.findAllByCountry(country).stream()
-                .map(Location::getStreet);
+                .map(Location::getStreet).map(Street::getName);
     }
 
     @Override
-    public Stream<String> findAllStateByCountry(@NonNull String country) {
+    @Transactional
+    public Stream<String> findAllStatesByCountry(@NonNull String country) {
         return this.locationRepository.findAllByCountry(country).stream()
                 .map(Location::getState);
+    }
+
+    @Override
+    @Transactional
+    public Stream<String> findAllCitiesByCountry(@NonNull String country) {
+        return this.locationRepository.findAllByCountry(country).stream()
+                .map(Location::getCity);
     }
 }
