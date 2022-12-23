@@ -28,9 +28,16 @@ public class LocationController {
     }
 
     @GetMapping("/location/streets")
-    public CompletableFuture<Stream<String>> findAllByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllStreetByCountry(@RequestParam("country") String country) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllByCountry(country).map(Street::getName)
+                this.locationService.findAllStreetsByCountry(country).map(Street::getName)
+        );
+    }
+
+    @GetMapping("/location/states")
+    public CompletableFuture<Stream<String>> findAllStateByCountry(@RequestParam("country") String country) {
+        return CompletableFuture.completedFuture(
+                this.locationService.findAllStateByCountry(country)
         );
     }
 }

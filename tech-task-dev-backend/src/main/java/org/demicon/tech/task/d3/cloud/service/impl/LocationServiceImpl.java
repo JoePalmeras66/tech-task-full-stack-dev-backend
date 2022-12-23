@@ -32,8 +32,14 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public Stream<Street> findAllByCountry(@NonNull String country) {
+    public Stream<Street> findAllStreetsByCountry(@NonNull String country) {
         return this.locationRepository.findAllByCountry(country).stream()
                 .map(Location::getStreet);
+    }
+
+    @Override
+    public Stream<String> findAllStateByCountry(@NonNull String country) {
+        return this.locationRepository.findAllByCountry(country).stream()
+                .map(Location::getState);
     }
 }

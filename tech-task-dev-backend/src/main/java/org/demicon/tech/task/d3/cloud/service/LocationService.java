@@ -8,5 +8,6 @@ import java.util.stream.Stream;
 
 public interface LocationService {
     Stream<Location> findAllDistinct();
-    Stream<Street> findAllByCountry(@NonNull String country);
+    Stream<Street> findAllStreetsByCountry(@NonNull String country);
+    Stream<String> findAllStateByCountry(@NonNull String country);
 }
