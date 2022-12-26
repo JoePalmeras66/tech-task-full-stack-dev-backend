@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataStreamEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataPageEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.domain.model.response.RandomUserResponse;
-import org.demicon.tech.task.d3.cloud.domain.model.response.page.RandomUserResponsePageInfo;
+import org.demicon.tech.task.d3.cloud.domain.model.response.page.PageInfo;
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,22 +15,22 @@ import java.util.stream.Stream;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1/randomusers")
+@RequestMapping("/techtask/api/v1")
 @RequiredArgsConstructor
 public class RandomUserController {
     private final RandomUserServiceImpl randomUserService;
     private final RandomDataStreamEntityToResponseConverter randomDataStreamEntityToResponseConverter;
     private final RandomDataPageEntityToResponseConverter randomDataPageEntityToResponseConverter;
 
-    @GetMapping("/all")
-    public CompletableFuture<RandomUserResponsePageInfo> findAllByLocationCountry(@RequestParam("country") String country,
-                                                                                  @PageableDefault(sort = "createdOn") Pageable pageable) {
+    @GetMapping("/randomusers/all")
+    public CompletableFuture<PageInfo<RandomUserResponse>> findAllByLocationCountry(@RequestParam("country") String country,
+                                                                                    @PageableDefault(sort = "createdOn") Pageable pageable) {
         return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
                 this.randomUserService.findAllByLocationCountry(country, pageable))
         );
     }
 
-    @GetMapping("/all/stream")
+    @GetMapping("/randomusers/all/stream")
     public CompletableFuture<Stream<RandomUserResponse>> findAllByLocationCountry(@RequestParam("country") String country) {
         return CompletableFuture.completedFuture(this.randomDataStreamEntityToResponseConverter.convert(
                 this.randomUserService.findAllByLocationCountry(country)
