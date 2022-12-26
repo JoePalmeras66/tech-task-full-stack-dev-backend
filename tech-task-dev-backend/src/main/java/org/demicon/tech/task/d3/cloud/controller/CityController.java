@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/techtask/api/v1")
 @RequiredArgsConstructor
 public class CityController {
     private final CityServiceImpl cityServiceImpl;

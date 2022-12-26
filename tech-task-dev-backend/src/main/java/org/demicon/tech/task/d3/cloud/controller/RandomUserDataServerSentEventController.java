@@ -13,17 +13,17 @@ import java.util.concurrent.CompletableFuture;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/techtask/api/v1")
 @RequiredArgsConstructor
 public class RandomUserDataServerSentEventController {
     private final RandomUserDataServerSentEventServiceImpl randomUserDataServerSentEventServiceImpl;
 
-    @GetMapping("/subscribe")
+    @GetMapping("/sse/subscribe")
     public CompletableFuture<SseEmitter> subscribe() throws IOException {
         return CompletableFuture.completedFuture(this.randomUserDataServerSentEventServiceImpl.subscribeEvent());
     }
 
-    @GetMapping("/dispatch")
+    @GetMapping("/sse/dispatch")
     public void dispatch() throws IOException {
         this.randomUserDataServerSentEventServiceImpl.dispatchEvent();
     }
