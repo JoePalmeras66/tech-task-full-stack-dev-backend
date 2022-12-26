@@ -15,14 +15,14 @@ import java.util.stream.Stream;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1/randomusers")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class RandomUserController {
     private final RandomUserServiceImpl randomUserService;
     private final RandomDataStreamEntityToResponseConverter randomDataStreamEntityToResponseConverter;
     private final RandomDataPageEntityToResponseConverter randomDataPageEntityToResponseConverter;
 
-    @GetMapping("/all")
+    @GetMapping("/randomusers/all")
     public CompletableFuture<PageInfo<RandomUserResponse>> findAllByLocationCountry(@RequestParam("country") String country,
                                                                                     @PageableDefault(sort = "createdOn") Pageable pageable) {
         return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
@@ -30,7 +30,7 @@ public class RandomUserController {
         );
     }
 
-    @GetMapping("/all/stream")
+    @GetMapping("/randomusers/all/stream")
     public CompletableFuture<Stream<RandomUserResponse>> findAllByLocationCountry(@RequestParam("country") String country) {
         return CompletableFuture.completedFuture(this.randomDataStreamEntityToResponseConverter.convert(
                 this.randomUserService.findAllByLocationCountry(country)
