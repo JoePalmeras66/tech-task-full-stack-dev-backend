@@ -12,5 +12,7 @@ import java.util.UUID;
 @Repository
 public interface LocationRepository extends QuerydslRepository<Location, UUID> {
     List<Location> findAllByCountry(@NonNull String country);
+    List<Location> findAllByCountryAndState(@NonNull String country, @NonNull String state);
+    List<Location> findAllByCountryAndStateAndCity(@NonNull String country, @NonNull String state, @NonNull String city);
     QLocation qLocation = QLocation.location;
 }

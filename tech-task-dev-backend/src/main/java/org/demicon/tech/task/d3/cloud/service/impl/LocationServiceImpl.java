@@ -43,4 +43,17 @@ public class LocationServiceImpl implements LocationService {
         return this.locationRepository.findAllByCountry(country).stream()
                 .map(Location::getCity);
     }
+
+    @Override
+    public Stream<String> findAllCitiesByCountryAndState(@NonNull String country, @NonNull String state) {
+        return this.locationRepository.findAllByCountryAndState(country, state).stream()
+                .map(Location::getCity);
+    }
+
+    @Override
+    public Stream<String> findAllStreetNamesByCountryAndStateAndCity(@NonNull String country, @NonNull String state, @NonNull String city) {
+        return this.locationRepository.findAllByCountryAndStateAndCity(country, state, city).stream()
+                .map(Location::getStreet)
+                .map(Street::getName);
+    }
 }

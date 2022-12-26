@@ -24,9 +24,12 @@ public class LocationController {
     }
 
     @GetMapping("/location/streets")
-    public CompletableFuture<Stream<String>> findAllStreetsByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllStreetNamesByCountryAndStateAndCity(
+            @RequestParam("country") String country,
+            @RequestParam("state") String state,
+            @RequestParam("city") String city) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllStreetNamesByCountry(country)
+                this.locationService.findAllStreetNamesByCountryAndStateAndCity(country, state, city)
         );
     }
 
@@ -38,9 +41,11 @@ public class LocationController {
     }
 
     @GetMapping("/location/cities")
-    public CompletableFuture<Stream<String>> findAllCitiesByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllCitiesByCountryAndState(
+            @RequestParam("country") String country,
+            @RequestParam("state") String state) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllCitiesByCountry(country)
+                this.locationService.findAllCitiesByCountryAndState(country, state)
         );
     }
 }
