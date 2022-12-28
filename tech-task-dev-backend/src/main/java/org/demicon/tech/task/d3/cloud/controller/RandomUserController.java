@@ -25,17 +25,23 @@ public class RandomUserController {
     @GetMapping("/randomusers/all")
     public CompletableFuture<PageableRandomUserDTO> findAllByLocationCountryPagination(
             @RequestParam("country") String country,
+            @RequestParam("state") String state,
+            @RequestParam("city") String city,
+            @RequestParam("gender") String gender,
             @PageableDefault(sort = "createdOn") Pageable pageable) {
         return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
-                this.randomUserService.findAllByLocationCountry(country, pageable))
+                this.randomUserService.findAll(country, state, city, gender, pageable))
         );
     }
 
     @GetMapping("/randomusers/all/stream")
     public CompletableFuture<Stream<RandomUserDTO>> findAllByLocationCountry(
-            @RequestParam("country") String country) {
+            @RequestParam("country") String country,
+            @RequestParam("state") String state,
+            @RequestParam("city") String city,
+            @RequestParam("gender") String gender) {
         return CompletableFuture.completedFuture(this.randomDataStreamEntityToResponseConverter.convert(
-                this.randomUserService.findAllByLocationCountry(country)
+                this.randomUserService.findAll(country, state, city, gender)
         ));
     }
 }

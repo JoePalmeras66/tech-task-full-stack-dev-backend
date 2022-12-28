@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.entity.Location;
 import org.demicon.tech.task.d3.cloud.entity.Street;
 import org.demicon.tech.task.d3.cloud.repository.LocationRepository;
-import org.demicon.tech.task.d3.cloud.repository.filters.LocationFilterImpl;
+import org.demicon.tech.task.d3.cloud.repository.filters.LocationFilter;
 import org.demicon.tech.task.d3.cloud.service.LocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +47,7 @@ public class LocationServiceImpl implements LocationService {
     private List<Location> findAll(String country,
                                    String state,
                                    String city) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, city);
+        BooleanBuilder predicate = LocationFilter.filter(country, state, city);
         return this.locationRepository.findAll(predicate);
     }
 
