@@ -22,7 +22,6 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional
     public Stream<String> findAllStates(String country) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, null, null);
         return this.findAll(country, null, null).stream()
                 .map(Location::getState);
     }
@@ -31,7 +30,6 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public Stream<String> findAllCities(String country,
                                         String state) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, null);
         return this.findAll(country, state, null).stream()
                 .map(Location::getCity);
     }
@@ -41,17 +39,14 @@ public class LocationServiceImpl implements LocationService {
     public Stream<String> findAllStreetNames(String country,
                                              String state,
                                              String city) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, city);
         return this.findAll(country, state, city).stream()
                 .map(Location::getStreet)
                 .map(Street::getName);
     }
 
-    @Override
-    @Transactional
-    public List<Location> findAll(String country,
-                                  String state,
-                                  String city) {
+    private List<Location> findAll(String country,
+                                   String state,
+                                   String city) {
         BooleanBuilder predicate = LocationFilterImpl.filter(country, state, city);
         return this.locationRepository.findAll(predicate);
     }
