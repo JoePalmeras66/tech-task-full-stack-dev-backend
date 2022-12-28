@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class StreetServiceImpl implements StreetService {
     private final StreetRepository streetRepository;
+
     @Override
     @Transactional
     public Stream<String> findAllStreetDistinct() {

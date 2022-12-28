@@ -85,6 +85,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public Stream<String> findAllCitiesByCountryAndState(@NonNull String country,
                                                          @NonNull String state) {
         return this.locationRepository.findAllByCountryAndState(country, state).stream()
@@ -92,6 +93,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public Stream<String> findAllStreetNamesByCountryAndStateAndCity(@NonNull String country,
                                                                      @NonNull String state,
                                                                      @NonNull String city) {
