@@ -7,5 +7,26 @@
  * in the user manual at https://docs.gradle.org/7.5.1/userguide/multi_project_builds.html
  */
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            url = "${artifactory_contextUrl}/tech-task-gradle-release-local"
+            credentials {
+                username = "$artifactory_user" // Artifactory user name
+                password = "$artifactory_password" // Password or API Key
+            }
+            System.out.println("URL:" + url);
+        }
+    }
+}
+
+buildCache {
+    local {
+        directory = new File(rootDir, 'build-cache')
+        removeUnusedEntriesAfterDays = 30
+    }
+}
+
 rootProject.name = 'tech-task-full-stack-dev-backend'
 include('tech-task-dev-backend')

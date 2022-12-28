@@ -5,6 +5,7 @@
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
  * User Manual available at https://docs.gradle.org/7.5.1/userguide/building_java_projects.html
  */
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
     id 'java'
@@ -13,18 +14,16 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "${ewerkQueryDslVersion}"
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
+dependencyManagement {
+    imports {
+        mavenBom(SpringBootPlugin.BOM_COORDINATES)
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-group="org.demicon.tech.task.d3.cloud"
-version="latest"
-
 dependencies {
+    implementation "tech.task.d3.cloud.api:tech-task-api:${techTaskApiVersion}"
+
     implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
