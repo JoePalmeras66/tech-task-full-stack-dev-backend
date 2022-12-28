@@ -1,7 +1,6 @@
 package org.demicon.tech.task.d3.cloud.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.demicon.tech.task.d3.cloud.converter.toresponse.LocationListEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.service.impl.LocationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class LocationController {
     private final LocationServiceImpl locationService;
-    private final LocationListEntityToResponseConverter locationListEntityToResponseConverter;
 
     @GetMapping("/location/countries")
     public CompletableFuture<Stream<String>> findAllCountries() {
