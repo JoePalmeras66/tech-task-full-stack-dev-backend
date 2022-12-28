@@ -1,7 +1,6 @@
 package org.demicon.tech.task.d3.cloud.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.demicon.tech.task.d3.cloud.converter.toresponse.LocationListEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.service.impl.LocationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class LocationController {
     private final LocationServiceImpl locationService;
-    private final LocationListEntityToResponseConverter locationListEntityToResponseConverter;
 
     @GetMapping("/location/countries")
     public CompletableFuture<Stream<String>> findAllCountries() {
@@ -23,29 +21,30 @@ public class LocationController {
         );
     }
 
-    @GetMapping("/location/streets")
-    public CompletableFuture<Stream<String>> findAllStreetNamesByCountryAndStateAndCity(
-            @RequestParam("country") String country,
-            @RequestParam("state") String state,
-            @RequestParam("city") String city) {
-        return CompletableFuture.completedFuture(
-                this.locationService.findAllStreetNamesByCountryAndStateAndCity(country, state, city)
-        );
-    }
-
     @GetMapping("/location/states")
-    public CompletableFuture<Stream<String>> findAllStatesByCountry(@RequestParam("country") String country) {
+    public CompletableFuture<Stream<String>> findAllStates(
+            @RequestParam(required = false, value="country") String country) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllStatesByCountry(country)
+                this.locationService.findAllStates(country)
         );
     }
 
     @GetMapping("/location/cities")
-    public CompletableFuture<Stream<String>> findAllCitiesByCountryAndState(
-            @RequestParam("country") String country,
-            @RequestParam("state") String state) {
+    public CompletableFuture<Stream<String>> findAllCities(
+            @RequestParam(required = false, value="country") String country,
+            @RequestParam(required = false, value="state") String state) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllCitiesByCountryAndState(country, state)
+                this.locationService.findAllCities(country, state)
+        );
+    }
+
+    @GetMapping("/location/streets")
+    public CompletableFuture<Stream<String>> findAllStreetNames(
+            @RequestParam(required = false, value="country") String country,
+            @RequestParam(required = false, value="state") String state,
+            @RequestParam(required = false, value="city") String city) {
+        return CompletableFuture.completedFuture(
+                this.locationService.findAllStreetNames(country, state, city)
         );
     }
 }
