@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.entity.Location;
 import org.demicon.tech.task.d3.cloud.entity.Street;
 import org.demicon.tech.task.d3.cloud.repository.LocationRepository;
-import org.demicon.tech.task.d3.cloud.repository.filters.LocationFilterImpl;
+import org.demicon.tech.task.d3.cloud.repository.filters.LocationFilter;
 import org.demicon.tech.task.d3.cloud.service.LocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,6 @@ public class LocationServiceImpl implements LocationService {
     @Override
     @Transactional
     public Stream<String> findAllStates(String country) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, null, null);
         return this.findAll(country, null, null).stream()
                 .map(Location::getState);
     }
@@ -31,7 +30,6 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public Stream<String> findAllCities(String country,
                                         String state) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, null);
         return this.findAll(country, state, null).stream()
                 .map(Location::getCity);
     }
@@ -41,18 +39,15 @@ public class LocationServiceImpl implements LocationService {
     public Stream<String> findAllStreetNames(String country,
                                              String state,
                                              String city) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, city);
         return this.findAll(country, state, city).stream()
                 .map(Location::getStreet)
                 .map(Street::getName);
     }
 
-    @Override
-    @Transactional
-    public List<Location> findAll(String country,
-                                  String state,
-                                  String city) {
-        BooleanBuilder predicate = LocationFilterImpl.filter(country, state, city);
+    private List<Location> findAll(String country,
+                                   String state,
+                                   String city) {
+        BooleanBuilder predicate = LocationFilter.filter(country, state, city);
         return this.locationRepository.findAll(predicate);
     }
 
@@ -85,6 +80,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public Stream<String> findAllCitiesByCountryAndState(@NonNull String country,
                                                          @NonNull String state) {
         return this.locationRepository.findAllByCountryAndState(country, state).stream()
@@ -92,6 +88,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional
     public Stream<String> findAllStreetNamesByCountryAndStateAndCity(@NonNull String country,
                                                                      @NonNull String state,
                                                                      @NonNull String city) {

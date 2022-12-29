@@ -16,7 +16,10 @@ dependencyResolutionManagement {
                 username = "$artifactory_user" // Artifactory user name
                 password = "$artifactory_password" // Password or API Key
             }
-            System.out.println("URL:" + url);
+            System.out.println("Resolve dependencies from JFrog Repositories: "
+                    + Instant.ofEpochMilli(System.currentTimeMillis())
+                    .atZone(ZoneId.systemDefault()).toLocalDateTime()
+            );
         }
     }
 }
