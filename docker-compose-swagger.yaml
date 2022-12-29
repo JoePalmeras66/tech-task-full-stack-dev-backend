@@ -7,9 +7,9 @@ services:
     ports:
       - "8082:8080"
     volumes:
-      - ./swagger/openapi.yaml:/openapi.yaml
+      - ./swagger/openapi-randomusers.yaml:/openapi-randomusers.yaml
     environment:
-      SWAGGER_JSON: /openapi.yaml
+      SWAGGER_JSON: /openapi-randomusers.yaml
       # API_URL: ""
     networks:
       - swagger_net
@@ -22,8 +22,8 @@ services:
     ports:
       - "8083:8000"
     volumes:
-      - ./swagger/openapi.yaml:/openapi.yaml
-    command: /openapi.yaml
+      - ./swagger/openapi-randomusers.yaml:/openapi-randomusers.yaml
+    command: /openapi-randomusers.yaml
     networks:
       swagger_net:
         aliases:
