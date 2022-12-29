@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
 import tech.task.d3.cloud.api.RandomusersApi;
 import tech.task.d3.cloud.api.model.PageableRandomUserDTO;
 import tech.task.d3.cloud.api.model.RandomUserDTO;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+@RestController
 @RequiredArgsConstructor
 public class RandomUserController implements RandomusersApi {
     private final RandomUserServiceImpl randomUserService;
