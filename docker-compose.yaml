@@ -12,7 +12,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD:-changeme}
     networks:
       - db_net
-      - swagger_net
     depends_on:
       - postgres
 
