@@ -22,7 +22,7 @@ gradlew bootBuildImage
 ### Run Application
 
 ```
-docker-compose -f docker-compose.yaml -f docker-compose-swagger.yaml up -d
+docker-compose up -d
 ```
 
 IMPORTANT: First time you running postgresDB docker-compose you have to setup the tables. See therefore Instructions under [README_INITIAL_SETUP.md](README_INITIAL_SETUP.md)
@@ -53,7 +53,7 @@ b569e4aa4400   joepalmeras66/tech-task-dev-backend:latest   "/cnb/process/web"  
 ### Shut down docker container's
 
 ```
-docker-compose -f docker-compose.yaml -f docker-compose-swagger.yaml down
+docker-compose down
 ```
 
 ### References
