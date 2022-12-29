@@ -48,6 +48,17 @@ services:
       - postgres
     restart: unless-stopped
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8082:8080"
+    environment:
+      URLS_PRIMARY_NAME: "Petstore"
+      URLS: "[{ url: 'https://gist.githubusercontent.com/JoePalmeras66/5841f6371c95614e7ea0b285e9b6ab30/raw/cb4dcbf2a0a85c461e6fa1266dc10750379aeb0b/openapi-randomusers.yaml', name: 'RandomUsers'},
+              { url: 'https://petstore.swagger.io/v2/swagger.json', name: 'Petstore'},
+            ]"
+
 networks:
   db_net:
     driver: bridge

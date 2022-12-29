@@ -22,7 +22,7 @@ gradlew bootBuildImage
 ### Run Application
 
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 IMPORTANT: First time you running postgresDB docker-compose you have to setup the tables. See therefore Instructions under [README_INITIAL_SETUP.md](README_INITIAL_SETUP.md)

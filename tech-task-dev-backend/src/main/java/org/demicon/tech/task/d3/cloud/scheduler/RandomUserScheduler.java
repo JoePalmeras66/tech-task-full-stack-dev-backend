@@ -2,9 +2,7 @@ package org.demicon.tech.task.d3.cloud.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.converter.toentities.RandomUserModelToEntityConverter;
-import org.demicon.tech.task.d3.cloud.converter.tomodels.ResultEntityToModelConverter;
 import org.demicon.tech.task.d3.cloud.domain.model.RandomUserData;
-import org.demicon.tech.task.d3.cloud.domain.model.Result;
 import org.demicon.tech.task.d3.cloud.entity.RandomUser;
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserDataServerSentEventServiceImpl;
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserServiceImpl;
@@ -30,7 +28,6 @@ public class RandomUserScheduler {
     private final WebClient client;
     private final RandomUserServiceImpl randomUserServiceImpl;
     private final RandomUserModelToEntityConverter randomUserModelToEntityConverter;
-    private final ResultEntityToModelConverter resultEntityToModelConverter;
     private final RandomUserDataServerSentEventServiceImpl randomUserDataServerSentEventServiceImpl;
 
     static final Logger LOG = LoggerFactory.getLogger(RandomUserScheduler.class);
