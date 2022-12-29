@@ -1,4 +1,4 @@
-package org.demicon.tech.task.d3.cloud.repository.filters;
+package org.demicon.tech.task.d3.cloud.repository.filters.utils;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
