@@ -4,38 +4,54 @@ import lombok.RequiredArgsConstructor;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataStreamEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataPageEntityToResponseConverter;
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserServiceImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
+import tech.task.d3.cloud.api.RandomusersApi;
 import tech.task.d3.cloud.api.model.PageableRandomUserDTO;
 import tech.task.d3.cloud.api.model.RandomUserDTO;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
+import org.springframework.http.ResponseEntity;
 
-@CrossOrigin
+import javax.validation.Valid;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
 @RestController
-@RequestMapping("/techtask/api/v1")
 @RequiredArgsConstructor
-public class RandomUserController {
+public class RandomUserController implements RandomusersApi {
     private final RandomUserServiceImpl randomUserService;
     private final RandomDataStreamEntityToResponseConverter randomDataStreamEntityToResponseConverter;
     private final RandomDataPageEntityToResponseConverter randomDataPageEntityToResponseConverter;
 
-    @GetMapping("/randomusers/all")
-    public CompletableFuture<PageableRandomUserDTO> findAllByLocationCountryPagination(
-            @RequestParam("country") String country,
-            @PageableDefault(sort = "createdOn") Pageable pageable) {
-        return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
-                this.randomUserService.findAllByLocationCountry(country, pageable))
+    @Override
+    public CompletableFuture<ResponseEntity<PageableRandomUserDTO>> getRandomUsers(
+            @Valid String country,
+            @Valid String state,
+            @Valid String city,
+            @Valid String gender,
+            @Valid Integer page,
+            @Valid Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdOn");
+        return CompletableFuture.completedFuture(new ResponseEntity<>(this.randomDataPageEntityToResponseConverter.convert(
+                this.randomUserService.findAll(country, state, city, gender, pageable)), HttpStatus.OK)
         );
     }
 
-    @GetMapping("/randomusers/all/stream")
-    public CompletableFuture<Stream<RandomUserDTO>> findAllByLocationCountry(
-            @RequestParam("country") String country) {
-        return CompletableFuture.completedFuture(this.randomDataStreamEntityToResponseConverter.convert(
-                this.randomUserService.findAllByLocationCountry(country)
-        ));
+    @Override
+    public CompletableFuture<ResponseEntity<List<RandomUserDTO>>> getStreamRandomUsers(
+            @Valid String country,
+            @Valid String state,
+            @Valid String city,
+            @Valid String gender) {
+        return CompletableFuture.completedFuture(new ResponseEntity<>(
+                        this.randomDataStreamEntityToResponseConverter.convert(
+                                this.randomUserService.findAll(country, state, city, gender)
+                        ).collect(Collectors.toList()), HttpStatus.OK
+                )
+        );
     }
 }

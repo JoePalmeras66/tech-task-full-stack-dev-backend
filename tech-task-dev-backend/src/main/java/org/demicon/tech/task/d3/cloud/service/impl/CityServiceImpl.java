@@ -5,6 +5,7 @@ import org.demicon.tech.task.d3.cloud.entity.Location;
 import org.demicon.tech.task.d3.cloud.repository.CityRepository;
 import org.demicon.tech.task.d3.cloud.service.CityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Stream;
 
@@ -12,7 +13,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
+
     @Override
+    @Transactional
     public Stream<String> findAllCityDistinct() {
         return this.cityRepository.findAll().stream().map(Location::getCity).distinct();
     }

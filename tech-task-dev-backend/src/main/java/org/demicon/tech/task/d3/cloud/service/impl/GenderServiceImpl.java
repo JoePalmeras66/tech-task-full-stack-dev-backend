@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class GenderServiceImpl implements GenderService {
     private final GenderRepository genderRepository;
+
     @Override
     @Transactional
     public Stream<String> findAllGenderDistinct() {
