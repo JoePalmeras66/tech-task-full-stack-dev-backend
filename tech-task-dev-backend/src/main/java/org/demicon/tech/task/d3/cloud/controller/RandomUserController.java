@@ -6,10 +6,12 @@ import org.demicon.tech.task.d3.cloud.converter.toresponse.RandomDataPageEntityT
 import org.demicon.tech.task.d3.cloud.service.impl.RandomUserServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tech.task.d3.cloud.api.model.PageableRandomUserDTO;
 import tech.task.d3.cloud.api.model.RandomUserDTO;
 
+import org.springframework.http.ResponseEntity;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -23,25 +25,26 @@ public class RandomUserController {
     private final RandomDataPageEntityToResponseConverter randomDataPageEntityToResponseConverter;
 
     @GetMapping("/randomusers/all")
-    public CompletableFuture<PageableRandomUserDTO> findAllByLocationCountryPagination(
+    public CompletableFuture<ResponseEntity<PageableRandomUserDTO>> findAllByLocationCountryPagination(
             @RequestParam("country") String country,
             @RequestParam("state") String state,
             @RequestParam("city") String city,
             @RequestParam("gender") String gender,
             @PageableDefault(sort = "createdOn") Pageable pageable) {
-        return CompletableFuture.completedFuture(this.randomDataPageEntityToResponseConverter.convert(
-                this.randomUserService.findAll(country, state, city, gender, pageable))
+
+        return CompletableFuture.completedFuture(new ResponseEntity<>(this.randomDataPageEntityToResponseConverter.convert(
+                this.randomUserService.findAll(country, state, city, gender, pageable)), HttpStatus.OK)
         );
     }
 
     @GetMapping("/randomusers/all/stream")
-    public CompletableFuture<Stream<RandomUserDTO>> findAllByLocationCountry(
+    public CompletableFuture<ResponseEntity<Stream<RandomUserDTO>>> findAllByLocationCountry(
             @RequestParam("country") String country,
             @RequestParam("state") String state,
             @RequestParam("city") String city,
             @RequestParam("gender") String gender) {
-        return CompletableFuture.completedFuture(this.randomDataStreamEntityToResponseConverter.convert(
-                this.randomUserService.findAll(country, state, city, gender)
-        ));
+        return CompletableFuture.completedFuture(new ResponseEntity<>(this.randomDataStreamEntityToResponseConverter.convert(
+                this.randomUserService.findAll(country, state, city, gender)), HttpStatus.OK)
+        );
     }
 }
