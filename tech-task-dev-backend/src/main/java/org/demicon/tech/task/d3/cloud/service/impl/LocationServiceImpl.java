@@ -23,7 +23,8 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public Stream<String> findAllStates(String country) {
         return this.findAll(country, null, null).stream()
-                .map(Location::getState);
+                .map(Location::getState)
+                .distinct();
     }
 
     @Override
@@ -31,7 +32,8 @@ public class LocationServiceImpl implements LocationService {
     public Stream<String> findAllCities(String country,
                                         String state) {
         return this.findAll(country, state, null).stream()
-                .map(Location::getCity);
+                .map(Location::getCity)
+                .distinct();
     }
 
     @Override
@@ -55,7 +57,8 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     public Stream<String> findAllCountries() {
         return this.locationRepository.findAll().stream()
-                .map(Location::getCountry).distinct();
+                .map(Location::getCountry)
+                .distinct();
     }
 
     @Override
