@@ -21,9 +21,20 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional
-    public Stream<String> findAllStates(String country) {
-        return this.findAll(country, null, null).stream()
-                .map(Location::getState);
+    public Stream<String> findAllCountries(String state,
+                                           String city) {
+        return this.findAll(null, state, city).stream()
+                .map(Location::getCountry)
+                .distinct();
+    }
+
+    @Override
+    @Transactional
+    public Stream<String> findAllStates(String country,
+                                        String city) {
+        return this.findAll(country, null, city).stream()
+                .map(Location::getState)
+                .distinct();
     }
 
     @Override
@@ -31,7 +42,8 @@ public class LocationServiceImpl implements LocationService {
     public Stream<String> findAllCities(String country,
                                         String state) {
         return this.findAll(country, state, null).stream()
-                .map(Location::getCity);
+                .map(Location::getCity)
+                .distinct();
     }
 
     @Override
@@ -49,13 +61,6 @@ public class LocationServiceImpl implements LocationService {
                                    String city) {
         BooleanBuilder predicate = LocationFilter.filter(country, state, city);
         return this.locationRepository.findAll(predicate);
-    }
-
-    @Override
-    @Transactional
-    public Stream<String> findAllCountries() {
-        return this.locationRepository.findAll().stream()
-                .map(Location::getCountry).distinct();
     }
 
     @Override

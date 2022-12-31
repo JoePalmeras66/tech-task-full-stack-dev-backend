@@ -15,17 +15,20 @@ public class LocationController {
     private final LocationServiceImpl locationService;
 
     @GetMapping("/location/countries")
-    public CompletableFuture<Stream<String>> findAllCountries() {
+    public CompletableFuture<Stream<String>> findAllCountries(
+            @RequestParam(required = false, value="state") String state,
+            @RequestParam(required = false, value="city") String city) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllCountries()
+                this.locationService.findAllCountries(state, city)
         );
     }
 
     @GetMapping("/location/states")
     public CompletableFuture<Stream<String>> findAllStates(
-            @RequestParam(required = false, value="country") String country) {
+            @RequestParam(required = false, value="country") String country,
+            @RequestParam(required = false, value="city") String city) {
         return CompletableFuture.completedFuture(
-                this.locationService.findAllStates(country)
+                this.locationService.findAllStates(country, city)
         );
     }
 

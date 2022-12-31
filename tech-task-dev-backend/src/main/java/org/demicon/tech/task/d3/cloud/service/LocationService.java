@@ -4,10 +4,10 @@ import lombok.NonNull;
 import java.util.stream.Stream;
 
 public interface LocationService {
-    Stream<String> findAllStates(String country);
+    Stream<String> findAllCountries(String state, String city);
+    Stream<String> findAllStates(String country, String city);
     Stream<String> findAllCities(String country, String state);
     Stream<String> findAllStreetNames(String country, String state, String city);
-    Stream<String> findAllCountries();
     Stream<String> findAllStreetNamesByCountry(@NonNull String country);
     Stream<String> findAllStatesByCountry(@NonNull String country);
     Stream<String> findAllCitiesByCountry(@NonNull String country);
